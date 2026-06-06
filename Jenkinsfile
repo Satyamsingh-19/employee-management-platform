@@ -1,12 +1,23 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven-3.9'
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/Satyamsingh-19/employee-management-platform.git'
+                    url: 'https://github.com/Satyamsingh-19/employee-management-platform.git'
+            }
+        }
+
+        stage('Verify Environment') {
+            steps {
+                sh 'java -version'
+                sh 'mvn -version'
             }
         }
 
@@ -16,24 +27,20 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Archive Artifact') {
             steps {
-                sh 'docker build -t employee-management .'
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
+    }
 
-        stage('Deploy Container') {
-            steps {
-                sh '''
-                docker stop employee-app || true
-                docker rm employee-app || true
+    post {
+        success {
+            echo 'Build Successful!'
+        }
 
-                docker run -d \
-                  --name employee-app \
-                  -p 8080:8080 \
-                  employee-management
-                '''
-            }
+        failure {
+            echo 'Build Failed!'
         }
     }
 }
