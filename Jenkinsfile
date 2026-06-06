@@ -7,7 +7,7 @@ tools {
 }
 
 environment {
-    IMAGE_NAME = 'employee-management-platform'
+    IMAGE_NAME = 'employee-management'
     CONTAINER_NAME = 'employee-app'
 }
 
@@ -48,18 +48,12 @@ stages {
         }
     }
 
-    stage('Remove Old Container') {
+    stage('Deploy') {
         steps {
             sh '''
             docker stop ${CONTAINER_NAME} || true
             docker rm ${CONTAINER_NAME} || true
-            '''
-        }
-    }
 
-    stage('Deploy New Container') {
-        steps {
-            sh '''
             docker run -d \
                 --name ${CONTAINER_NAME} \
                 -p 8080:8080 \
