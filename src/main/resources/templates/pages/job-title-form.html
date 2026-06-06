@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(${pageTitle}, ~{::section})}">
+<section>
+    <div class="page-heading">
+        <div>
+            <h1 th:text="${pageTitle}"></h1>
+            <p>Create or update a job title.</p>
+        </div>
+        <a th:href="@{/job-titles}" class="btn btn-outline-secondary">Back</a>
+    </div>
+    <div class="card form-card">
+        <div class="card-body">
+            <form th:action="@{/job-titles/save}" th:object="${jobTitle}" method="post" class="row g-3">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" th:field="*{id}">
+                <div class="col-md-6">
+                    <label class="form-label">Name</label>
+                    <input th:field="*{name}" class="form-control" required>
+                    <div class="text-danger small" th:errors="*{name}"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Level</label>
+                    <input th:field="*{level}" class="form-control">
+                    <div class="text-danger small" th:errors="*{level}"></div>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea th:field="*{description}" class="form-control" rows="4"></textarea>
+                    <div class="text-danger small" th:errors="*{description}"></div>
+                </div>
+                <div class="col-12"><button class="btn btn-primary" type="submit">Save job title</button></div>
+            </form>
+        </div>
+    </div>
+</section>
+</html>

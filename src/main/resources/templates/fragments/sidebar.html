@@ -1,0 +1,12 @@
+<nav class="px-2" th:fragment="sidebar">
+    <p class="text-uppercase text-muted small fw-semibold px-3">Workspace</p>
+    <div class="nav nav-pills flex-column gap-1">
+        <a class="nav-link" th:href="@{/dashboard}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+        <a class="nav-link" th:href="@{/employees}" sec:authorize="hasAnyRole('ADMIN','HR','MANAGER')"><i class="bi bi-people me-2"></i>Employees</a>
+        <a class="nav-link" th:href="@{/departments}"><i class="bi bi-diagram-3 me-2"></i>Departments</a>
+        <a class="nav-link" th:href="@{/job-titles}"><i class="bi bi-briefcase me-2"></i>Job titles</a>
+        <a class="nav-link" th:href="@{/leaves}"><i class="bi bi-calendar-check me-2"></i>Leave requests</a>
+        <a class="nav-link" th:href="@{/audit-logs}" sec:authorize="hasRole('ADMIN')"><i class="bi bi-journal-text me-2"></i>Audit logs</a>
+        <a class="nav-link" th:href="@{/profile}"><i class="bi bi-person-circle me-2"></i>My profile</a>
+    </div>
+</nav>

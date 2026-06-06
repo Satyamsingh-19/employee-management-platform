@@ -1,0 +1,8 @@
+<!DOCTYPE html><html th:replace="~{layout :: layout(${pageTitle}, ~{::section})}"><section>
+<div class="page-heading"><div><h1>My profile</h1><p>Your authenticated account details.</p></div></div>
+<div class="card form-card shadow-sm"><div class="card-body"><div class="row g-4">
+<div class="col-md-6"><span class="text-muted small">Username</span><p class="fs-5 fw-semibold mb-0" th:text="${user.username}"></p></div>
+<div class="col-md-6"><span class="text-muted small">Email</span><p class="fs-5 fw-semibold mb-0" th:text="${user.email}"></p></div>
+<div class="col-md-6"><span class="text-muted small">Roles</span><p class="mb-0"><span class="badge text-bg-primary me-1" th:each="role : ${user.roles}" th:text="${role}"></span></p></div>
+<div class="col-md-6"><span class="text-muted small">Account created</span><p class="mb-0" th:text="${user.createdAt}"></p></div>
+</div></div></div></section></html>
