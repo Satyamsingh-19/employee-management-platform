@@ -1,0 +1,29 @@
+services:
+  employee-mysql:
+    image: mysql:8.0
+    container_name: employee-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: employee_management
+    ports:
+      - "3306:3306"
+    volumes:
+      - employee-mysql-data:/var/lib/mysql
+    networks:
+      - employee-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+networks:
+  employee-network:
+    driver: bridge
+    name: employee-network
+
+volumes:
+  employee-mysql-data:
+    name: employee-mysql-data

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(${pageTitle}, ~{::section})}">
+<section>
+	<div class="page-heading">
+		<div>
+			<h1>Dashboard</h1>
+			<p>At-a-glance people operations overview.</p>
+		</div>
+	</div>
+	<div class="row g-4 mb-4">
+		<div class="col-sm-6 col-xl-3">
+			<div class="card metric-summary h-100 shadow-sm">
+				<div class="card-body"><i class="bi bi-people fs-3 text-primary"></i>
+					<p class="text-muted mb-1 mt-3">Employees</p><strong class="display-6"
+						th:text="${employeeCount}"></strong>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xl-3">
+			<div class="card metric-summary h-100 shadow-sm">
+				<div class="card-body"><i class="bi bi-diagram-3 fs-3 text-success"></i>
+					<p class="text-muted mb-1 mt-3">Departments</p><strong class="display-6"
+						th:text="${departmentCount}"></strong>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xl-3">
+			<div class="card metric-summary h-100 shadow-sm">
+				<div class="card-body"><i class="bi bi-briefcase fs-3 text-info"></i>
+					<p class="text-muted mb-1 mt-3">Job titles</p><strong class="display-6"
+						th:text="${jobTitleCount}"></strong>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xl-3">
+			<div class="card metric-summary h-100 shadow-sm">
+				<div class="card-body"><i class="bi bi-calendar-check fs-3 text-warning"></i>
+					<p class="text-muted mb-1 mt-3">Leave requests</p><strong class="display-6"
+						th:text="${leaveCount}"></strong>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card shadow-sm">
+		<div class="card-body">
+			<h2 class="h5 mb-3">Recent audit activity</h2>
+			<div class="table-responsive">
+				<table class="table align-middle mb-0">
+					<thead>
+						<tr>
+							<th>When</th>
+							<th>User</th>
+							<th>Action</th>
+							<th>Entity</th>
+							<th>Details</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="audit : ${audits}">
+							<td th:text="${audit.changedAt}"></td>
+							<td th:text="${audit.changedBy}"></td>
+							<td th:text="${audit.action}"></td>
+							<td th:text="${audit.entityName}"></td>
+							<td th:text="${audit.details}"></td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(audits)}">
+							<td colspan="5" class="text-center text-muted py-4">No audit activity yet.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+
+</html>
