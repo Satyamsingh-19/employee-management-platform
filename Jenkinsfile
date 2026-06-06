@@ -18,6 +18,7 @@ pipeline {
             steps {
                 sh 'java -version'
                 sh 'mvn -version'
+                sh 'docker --version'
             }
         }
 
@@ -32,11 +33,23 @@ pipeline {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t employee-management-platform:latest .'
+            }
+        }
+
+        stage('Verify Docker Image') {
+            steps {
+                sh 'docker images'
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build Successful!'
+            echo 'Build & Docker Image Creation Successful!'
         }
 
         failure {
