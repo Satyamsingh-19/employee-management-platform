@@ -1,7 +1,7 @@
 pipeline {
 agent any
 
-
+```
 tools {
     maven 'Maven-3.9'
 }
@@ -42,7 +42,9 @@ stages {
 
     stage('Docker Build') {
         steps {
-            sh 'docker build -t ${IMAGE_NAME}:latest .'
+            sh '''
+                docker build -t ${IMAGE_NAME}:latest .
+            '''
         }
     }
 
@@ -53,6 +55,7 @@ stages {
                 docker rm ${CONTAINER_NAME} || true
 
                 docker run -d \
+                  --network employee-network \
                   --name ${CONTAINER_NAME} \
                   -p 8080:8080 \
                   -e DB_URL="jdbc:mysql://employee-mysql:3306/employee_management?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC" \
@@ -79,6 +82,6 @@ post {
         echo 'Pipeline Failed!'
     }
 }
-
+```
 
 }
